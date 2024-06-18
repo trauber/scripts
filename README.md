@@ -1,4 +1,4 @@
-# Backups of Scripts I use
+# Miscellaneous Scripts
 
 
 - [eyu.awk](eyu.awk) - Echo Your Usage. Wrap usage text in echo "". Appends space padding to a max length.
