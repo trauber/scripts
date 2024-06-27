@@ -27,6 +27,7 @@ rem2tb()  {
 
     echo "/region US"
 
+
     while read line
     do
         year=$(echo "$line" | cut -d"/" -f1)
@@ -37,20 +38,17 @@ rem2tb()  {
 
         [ "$year" -ne "$previous_year" ] && echo "$year-01-"
 
-        [ "$month" -ne "$previous_month" ] && echo "-$month-"
+        echo "-$month-"
 
-        if [ "$day" -ne "$previous_day" ]
+        echo -n "--$day "
+
+        if [[ "$last_word" =~ ^.*\.txt$ ]]
         then
-            echo -n "--$day "
-
-            if [[ "$last_word" =~ ^.*\.txt$ ]]
-            then
-                note=$(echo "$note" | sed 's/'"$last_word"'//')
-                echo "$note"
-                cat "$last_word"
-            else
-                echo "$note"
-            fi
+            note=$(echo "$note" | sed 's/'"$last_word"'//')
+            echo "$note"
+            cat "$last_word"
+        else
+        echo "$note"
         fi
 
         
@@ -59,7 +57,7 @@ rem2tb()  {
         previous_month=$month
         previous_day=$day
 
-    done < <(remind  -s -c36 -f "$file_in")
+    done < <(remind  -s -c36 "$file_in")
 
 } > tmp.txt
 
